@@ -25,7 +25,7 @@ namespace LINQPractice
 
             // Sort them by Name
             // desc and asc order by 
-            Console.WriteLine("Sorting list by Name - Query format");
+            Console.WriteLine("Ordering list by Name - Query format");
             var lstSortedEmployees = from employee in lstEmployee
                                      orderby employee.FullName descending
                                      select employee;
@@ -35,7 +35,7 @@ namespace LINQPractice
 
             Console.WriteLine(seperator);
 
-            Console.WriteLine("Sorting list by Name - Method Format");
+            Console.WriteLine("Ordering list by Name - Method Format");
             var lstOrderbyMethod = lstEmployee.OrderByDescending(x => x.FullName).ThenByDescending(x => x.Location);
 
             foreach (var employee in lstOrderbyMethod)
@@ -45,6 +45,16 @@ namespace LINQPractice
 
 
             // find an employee whose name start with an H
+            Console.WriteLine("Find Employee whose name starts with H - Query format");
+            var lstSearchedEmployees = from employee in lstEmployee
+                                       where employee.FullName.ToLower().StartsWith("h")
+                                       select new {FullName = employee.FullName };
+
+            foreach (var employee in lstSearchedEmployees)
+                Console.WriteLine($"Search Results: {employee.FullName}");
+
+            Console.WriteLine(seperator);
+
             // find employees with two names 
             // find employees having atleast two 'a's in their 
             // Group them by City and show the count per results 
