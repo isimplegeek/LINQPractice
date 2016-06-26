@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace LINQPractice
@@ -10,11 +11,11 @@ namespace LINQPractice
     {
         static void Main(string[] args)
         {
-            string seperator = GetSeparater(75, '='); 
+            string seperator = GetSeparater(75, '=');
             var lstEmployee = new List<Employee>();
 
-            lstEmployee.Add(new Employee { ID = 1, FullName = "Hatim Ali", Location = "Sydney", DateofBirth=new DateTime(1981, 8, 11)});
-            lstEmployee.Add(new Employee { ID = 2, FullName = "Mohammad", Location = "Toronto", DateofBirth=new DateTime(1991, 1, 1)});
+            lstEmployee.Add(new Employee { ID = 1, FullName = "Hatim Ali", Location = "Sydney", DateofBirth = new DateTime(1981, 8, 11) });
+            lstEmployee.Add(new Employee { ID = 2, FullName = "Mohammad", Location = "Toronto", DateofBirth = new DateTime(1991, 1, 1) });
             lstEmployee.Add(new Employee { ID = 3, FullName = "Hussain Ali", Location = "Ratlam", DateofBirth = new DateTime(1954, 1, 10) });
             lstEmployee.Add(new Employee { ID = 4, FullName = "Tayyab Hussain", Location = "Karachi", DateofBirth = new DateTime(1975, 1, 13) });
             lstEmployee.Add(new Employee { ID = 5, FullName = "M. Abizer Bhai", Location = "Sharjah", DateofBirth = new DateTime(1984, 2, 15) });
@@ -48,7 +49,7 @@ namespace LINQPractice
             Console.WriteLine("Find Employee whose name starts with H - Query format");
             var lstSearchedEmployees = from employee in lstEmployee
                                        where employee.FullName.ToLower().StartsWith("h")
-                                       select new {FullName = employee.FullName };
+                                       select new { FullName = employee.FullName };
 
             foreach (var employee in lstSearchedEmployees)
                 Console.WriteLine($"Search Results: {employee.FullName}");
@@ -56,8 +57,32 @@ namespace LINQPractice
             Console.WriteLine(seperator);
 
             // find employees with two names 
+            Console.WriteLine("Find Employee with two names - Query format");
+            var lstoutput3 = lstEmployee.Where(n => n.FullName.Split(' ').Length > 1);
+
+            foreach (var employee in lstoutput3)
+                Console.WriteLine($"Search Results: {employee.FullName}");
+
+            Console.WriteLine(seperator);
+
             // find employees having atleast two 'a's in their 
+            Console.WriteLine("Find Employee with atleast two A's in their name - Query format");
+            var lstoutput4 = lstEmployee.Where(n => n.FullName.Where(c => c == (int)'a' || c == (int)'A').Count() > 1) ;
+
+            foreach (var employee in lstoutput4)
+                Console.WriteLine($"Search Results: {employee.FullName}");
+
+            Console.WriteLine(seperator);
+
             // Group them by City and show the count per results 
+            Console.WriteLine("Find Employee with atleast two A's in their name - Query format");
+            var lstoutput5 = lstEmployee.GroupBy( n => n.Location);
+
+            foreach (var grouped in lstoutput5)
+                Console.WriteLine($"Search Results: {grouped.Count()}");
+
+            Console.WriteLine(seperator);
+
             // Find who is the eldest
             // Find someone living in Lahore
             // find all the person born in 80s
